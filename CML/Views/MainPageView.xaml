@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CML.Views.MainPageView"
+             BackgroundColor="#f25900">
+
+    <Grid Padding="0, 30, 0, 0" >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackLayout VerticalOptions="StartAndExpand"
+                    Padding="10, 0"
+                    Grid.Row="0">
+
+        <Image Source="logo.png"
+                Aspect="AspectFit"
+                Margin="10, 0"
+                HeightRequest="100"></Image>
+          
+        <!--<Label Text="CENTRAL DE"
+                   HorizontalTextAlignment="Center"
+                   FontAttributes="Bold"
+                   FontSize="26"
+                   TextColor="White"></Label>
+          <Label Text="MONITORAMENTO"
+                     HorizontalTextAlignment="Center"
+                     FontAttributes="Bold"
+                     FontSize="26"
+                     TextColor="White"></Label>
+          <Label Text="LOGÍSTICO"
+                     HorizontalTextAlignment="Center"
+                     FontAttributes="Bold"
+                     FontSize="26"
+                     TextColor="White"></Label>-->
+
+        </StackLayout>
+
+        <StackLayout VerticalOptions="CenterAndExpand"
+                    Grid.Row="1">
+
+            <Label Text="{Binding ActionText}"
+                   TextColor="White"
+                   Margin="10, 30, 10, 30"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   FontSize="Large"></Label>
+          <!--Image = "@drawable/android_button"-->
+            <ContentView>
+              <!--<Button
+                HeightRequest="100"
+                Text = "CLICA AI WILL"
+                Command="{Binding ScreenTapCommand}">
+              </Button>-->
+                <Image Source="{Binding ActionImage}"
+                   HeightRequest="100"
+                   Aspect="AspectFit">
+                  <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ScreenTapCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ScreenTapCommand}"/>
+                </ContentView.GestureRecognizers> 
+            </ContentView>
+
+
+            <Label Text="{Binding LatLonInfo}"
+                   TextColor="White"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalTextAlignment="Center"
+                   FontSize="Large"></Label>
+
+            <Label Text="{Binding SpeedCompare}"
+                   TextColor="White"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalTextAlignment="Center"
+                   FontSize="Large"></Label>
+
+            <Label Text="{Binding NotSentMsg}"
+                   TextColor="White"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalTextAlignment="Center"
+                   FontSize="Large"></Label>
+
+        </StackLayout>
+
+        <StackLayout VerticalOptions="End"
+                    BackgroundColor="#AFAFAD"
+                    Grid.Row="2"
+                    Spacing="0">
+            
+            <Label Text="{Binding VersionName}"
+                   TextColor="White"
+                   HorizontalOptions="Start"
+                   HeightRequest="14"
+                   VerticalTextAlignment="End"
+                   FontSize="12"></Label>
+            
+            <Label Text="{Binding DeviceId}"
+                   TextColor="White"
+                   HorizontalOptions="CenterAndExpand"
+                   HeightRequest="36"
+                   VerticalTextAlignment="Center"
+                   FontSize="28"></Label>
+        </StackLayout>
+        
+    </Grid>
+
+</ContentPage>
+
