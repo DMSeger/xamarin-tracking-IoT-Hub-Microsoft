@@ -555,7 +555,7 @@ namespace CML.ViewModel
                 GC.Collect();
             }
         }
-                
+         
         #endregion
 
         #region Utils Methods

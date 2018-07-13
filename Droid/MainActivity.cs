@@ -63,7 +63,8 @@ namespace CML.Droid
 
             UserDialogs.Init(Instance);
 
-            //Incluir aqui serviço para obter mensagens via IoT.
+            var rcvMsgService = new Intent(this, typeof(ReceiveMessagesTaskService));
+            StartService(rcvMsgService);
 
             MessagingCenter.Subscribe<StartLongRunningTaskMessage>(this, "StartLongRunningTaskMessage", message =>
             {
