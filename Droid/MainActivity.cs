@@ -13,6 +13,8 @@ using CML.Droid.Providers;
 using System;
 using static Android.OS.PowerManager;
 using System.Threading.Tasks;
+using System.Net;
+using System.IO;
 
 namespace CML.Droid
 {
@@ -83,6 +85,11 @@ namespace CML.Droid
                 WakeDevice();
             });
 
+            MessagingCenter.Subscribe<string>(this, "Download", message =>
+            {
+                Download(message);
+            });
+
             SimpleIoc.Default.Register<IDeviceId, DeviceIdAndroidProvider>();          
         }
 
@@ -102,6 +109,40 @@ namespace CML.Droid
             }
             catch (Exception e)
             {; }
+        }
+
+        private async void Download(string _url)
+        {
+            try
+            {
+                var webClient = new WebClient();
+                var url = new Uri(_url);
+                byte[] x = await webClient.DownloadDataTaskAsync(url);
+
+                string documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                string localFilename = "com.arcelormittal.cml.prd.apk";
+                string localPath = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath + "/" + localFilename;
+                if (File.Exists(localPath))
+                {
+                    File.Delete(@localPath);                    
+                }
+                FileStream fs = File.Create(@localPath);
+                fs.Close();
+                File.WriteAllBytes(localPath, x);
+                //
+                // writes to local storage  
+               
+                Intent promptInstall = new Intent(Intent.ActionView).SetDataAndType(Android.Net.Uri.FromFile(new Java.IO.File(localPath)), "application/vnd.android.package-archive");
+                promptInstall.AddFlags(ActivityFlags.NewTask);
+                // The PendingIntent to launch our activity if the user selects this notification
+                PendingIntent contentIntent = PendingIntent.GetActivity(this, 0, promptInstall, 0);
+                var nBuilder = new Notification.Builder(this);
+                StartActivity(promptInstall);   
+            }
+            catch (Exception e)
+            {
+
+            }
         }
     }
 }
